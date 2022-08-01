@@ -89,7 +89,9 @@ const iterate = (state, iterations) => {
 
 const main = (pattern, iterations) => {
   const result = iterate(startPatterns[pattern], iterations)
-  result.forEach(a => console.log(printCells(a)))
+  result.forEach(a => {
+    console.log(printCells(a))
+  });
 };
 
 const startPatterns = {
