@@ -22,13 +22,48 @@ const printCell = (cell, state) => {
   return contains.call(state, cell) ? '\u25A3' : '\u25A2'
 };
 
-const corners = (state = []) => {};
+const corners = (state = []) => {
+  if (state.length === 0) {
+    return {
+      topRight: [0, 0],
+      bottomLeft: [0, 0]
+    }
+  }
 
-const printCells = (state) => {};
+  const xs = state.map(([x, _]) => x);
+  const ys = state.map(([_, y]) => y);
+  return {
+    topRight: [Math.max(...xs), Math.max(...ys)],
+    bottomLeft: [Math.min(...xs), Math.min(...ys)]
+  };
 
-const getNeighborsOf = ([x, y]) => {};
+};
 
-const getLivingNeighbors = (cell, state) => {};
+const printCells = (state) => {
+  const { bottomLeft, topRight } = corners(state)
+  let board = ""
+
+  for (let y = topRight[1]; y >= bottomLeft[1]; y-- ) {
+    let row = []
+    for (let x = bottomLeft[0]; x <= topRight[0]; x++ ) {
+      row.push(printCell([x, y], state))
+    };
+    board += row.join(" ") + "\n"
+  }
+  console.log(board)
+  return board
+};
+
+const getNeighborsOf = ([x, y]) => [
+  [x-1, y+1], [x, y+1], [x+1, y+1],
+  [x-1, y],             [x+1, y],
+  [x-1, y-1], [x, y-1], [x+1, y-1]
+];
+
+const getLivingNeighbors = (cell, state) => {
+  const bindContains = contains.bind(state)
+  return getNeighborsOf(cell).filter(c => contains.bind(state)(c))
+};
 
 const willBeAlive = (cell, state) => {};
 
