@@ -19,9 +19,6 @@ function contains(cell) {
 }
 
 const printCell = (cell, state) => {
-  console.log(`\n-----\n ${cell}\n ${state}`)
-  contains.call(state, cell)
-  console.log(  contains.call(state, cell)  )
   return contains.call(state, cell) ? '\u25A3' : '\u25A2'
 };
 
